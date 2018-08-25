@@ -14,8 +14,9 @@ mvn install
 <plugin>
   <groupId>cuccovillo.alessio.maven</groupId>
   <artifactId>createdirs-maven-plugin</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
   <configuration>
+    <skip>false</skip
     <intermediateDirs>true</intermediateDirs>
     <dirs>
       <dir>${project.build.directory}/non/existent/directory</dir>

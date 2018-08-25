@@ -18,6 +18,13 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "createdirs")
 public class CreateDirsMojo extends AbstractMojo {
 
+    @Parameter(required = false, defaultValue = "false")
+    /**
+     * Boolean value that indicates whether or not skip the execution of this
+     * plugin. <br />Default false
+     */
+    boolean skip;
+
     @Parameter(required = false, defaultValue = "true")
     /**
      * Boolean value that indicates whether or not create intermediate
@@ -34,6 +41,10 @@ public class CreateDirsMojo extends AbstractMojo {
     List<File> dirs;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (skip) {
+            getLog().info("Skipping the execution of the plugin");
+            return;
+        }
         for (File dir : dirs) {
             String path = dir.getAbsolutePath();
             if (!dir.exists()) {
