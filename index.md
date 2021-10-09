@@ -1,37 +1,55 @@
-## Welcome to GitHub Pages
+# createdirs-maven-plugin
+Simple Maven plugin used to create directories
 
-You can use the [editor on GitHub](https://github.com/acuccovi/createdirs-maven-plugin/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+## Installation & Configuration
+```xml
+<plugin>
+  <groupId>cuccovillo.alessio.maven</groupId>
+  <artifactId>createdirs-maven-plugin</artifactId>
+  <version>1.1</version>
+  <configuration>
+    <skip>false</skip>
+    <intermediateDirs>true</intermediateDirs>
+    <dirs>
+      <dir>${project.build.directory}/non/existent/directory</dir>
+      <dir>${project.build.directory}/existent/directory/new/sub/directory</dir>
+    </dirs>
+  </configuration>
+  <executions>
+    <execution>
+      <goals>
+        <goal>create-dirs</goal>
+      </goals>
+      <phase>package</phase>
+    </execution>
+  </executions>
+</plugin>
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Create directories with following command:
+```shell
+mvn package createdirs:create-dirs
+```
 
-### Jekyll Themes
+## About this plugin
+I've not found any plugin that can simply create directories.
+This plugin does nothing more than this.
+Given a list of directories (one or more) you can create your deployment structure.
+Do you need that your application has the directories in, work, out created on the target directory under the linux folder?
+It's not a problem!
+Simply configure the plugin like this:
+```xml
+<configuration>
+  <dirs>
+    <dir>${project.build.directory}/linux/in<dir>
+    <dir>${project.build.directory}/linux/work<dir>
+    <dir>${project.build.directory}/linux/out<dir>
+  </dirs> 
+</configuration>
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/acuccovi/createdirs-maven-plugin/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+If the intermediate directory linux does not exist, then will be created for you.
+If you need to not create any intermediate directory add the following to the configuration:
+```xml
+  <intermediateDirs>false</intermediateDirs>
+```
